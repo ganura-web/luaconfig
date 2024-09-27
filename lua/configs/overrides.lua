@@ -11,18 +11,26 @@ M.treesitter = {
     "rust",
     "toml",
     "markdown",
+    "svelte",
+  },
+  indent = {
+    enable = true,
+    disable = {
+      "python",
+    },
   },
 }
 
 M.mason = {
   ensure_installed = {
+    -- lua
     "lua-language-server",
     "stylua",
+    -- webdev
     "css-lsp",
     "html-lsp",
     "typescript-language-server",
     "deno",
-    "rust_analyzer",
     "svelte-language-server",
     "marksman",
   },
