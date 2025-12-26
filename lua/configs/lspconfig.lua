@@ -1,23 +1,23 @@
--- EXAMPLE 
+-- EXAMPLE
 local on_attach = require("nvchad.configs.lspconfig").on_attach
 local on_init = require("nvchad.configs.lspconfig").on_init
 local capabilities = require("nvchad.configs.lspconfig").capabilities
 
-local lspconfig = require "lspconfig"
-local servers = { "html", "cssls", "marksman", "svelte" }
+local servers = { "html", "cssls", "marksman", "svelte", 'lua_ls', 'ts_ls' }
 
--- lsps with default config
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
+--Enable (broadcasting) snippet capability for completion
+local csscapabilities = vim.lsp.protocol.make_client_capabilities()
+csscapabilities.textDocument.completion.completionItem.snippetSupport = true
+vim.lsp.config("cssls", {
+  capabilities = csscapabilities
+})
+
+for _, server in ipairs(servers) do
+  vim.lsp.config(server, {
+    capabilities = capabilities,
     on_attach = on_attach,
     on_init = on_init,
-    capabilities = capabilities,
-  }
+  })
 end
 
--- typescript
-lspconfig.ts_ls.setup {
-  on_attach = on_attach,
-  on_init = on_init,
-  capabilities = capabilities,
-}
+vim.lsp.enable(servers)
